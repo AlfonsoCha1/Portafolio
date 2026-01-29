@@ -38,7 +38,9 @@ body{
 
 .floating-card{position:fixed;right:24px;top:100px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:12px;border-radius:12px;display:flex;gap:12px;align-items:center;box-shadow:0 12px 40px rgba(2,6,23,0.6);backdrop-filter:blur(6px);transition:opacity 0.4s ease, visibility 0.4s ease;opacity:1;visibility:visible}
 .floating-card.scroll-hide{opacity:0;visibility:hidden}
-.fp-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#3b82f6,#06b6d4);font-weight:700}
+.fp-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#3b82f6,#06b6d4);font-weight:700;position:relative;overflow:hidden}
+.fp-avatar img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
+.fp-avatar .fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:700}
 .fp-name{font-weight:700}
 .fp-role{font-size:13px;color:var(--muted)}
 
@@ -58,7 +60,8 @@ body{
 .cv-inline{color:var(--accent);font-weight:700}
 
 .profile-card{width:260px;height:360px;border-radius:20px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 30px 80px rgba(2,6,23,0.6)}
-.profile-photo{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#06b6d4,#3b82f6);box-shadow:0 14px 40px rgba(2,6,23,0.5);animation:float 5s ease-in-out infinite}
+.profile-photo{width:160px;height:160px;border-radius:50%;background:linear-gradient(135deg,#06b6d4,#3b82f6);box-shadow:0 14px 40px rgba(2,6,23,0.5);animation:float 5s ease-in-out infinite;position:relative;overflow:hidden}
+.profile-photo img{width:100%;height:100%;object-fit:cover;display:block;border-radius:50%}
 .profile-deco{position:absolute;right:-24px;bottom:-24px;width:120px;height:120px;border-radius:20px;background:linear-gradient(90deg,rgba(110,231,183,0.06),transparent)}
 
 @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
@@ -67,25 +70,67 @@ body{
 .container{max-width:1100px;margin:0 auto}
 
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
-.project-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:14px;transition:transform .35s ease, box-shadow .35s ease;cursor:pointer}
+.project-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:14px;transition:transform .35s ease, box-shadow .35s ease;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between}
 .project-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,23,0.65)}
 .project-thumb{height:140px;border-radius:10px;background:linear-gradient(135deg,#06b6d4,#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:700;color:#04233a}
-.proj-link{display:inline-block;margin-top:12px;color:#04233a;background:linear-gradient(90deg,#fff,#f3f4f6);padding:8px 14px;border-radius:10px;font-weight:700;transition:transform .18s ease, box-shadow .18s ease}
+.proj-link{display:inline-flex;margin-top:auto;width:100%;align-items:center;justify-content:center;color:#04233a;background:linear-gradient(90deg,#fff,#f3f4f6);padding:12px 16px;border-radius:10px;font-weight:700;font-size:16px;transition:transform .18s ease, box-shadow .18s ease}
 .proj-link:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(3,16,34,0.35)}
 
-/* Docs (certificados / diplomas) */
+/* Center the projects section title */
+#projects .container h2{ text-align:center; margin-bottom:18px; font-size:36px }
+
+/* Center the contact section title */
+#contact .container h2{ text-align:center; margin-bottom:18px; font-size:36px }
+
+/* Center and enlarge the About section title */
+#about .container h2{ text-align:center; margin-bottom:18px; font-size:36px }
+
 .docs-wrap{display:flex;gap:24px;flex-wrap:wrap;margin-top:18px}
 .docs-column{flex:1;min-width:260px}
-.docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
-.doc-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:14px;border-radius:12px;transition:transform .28s ease,box-shadow .28s ease}
-.doc-card:hover{transform:translateY(-6px);box-shadow:0 18px 36px rgba(2,6,23,0.55)}
-.doc-thumb{height:90px;border-radius:8px;background:linear-gradient(135deg,#f97316,#fb7185);display:flex;align-items:center;justify-content:center;font-weight:800;color:#031022;margin-bottom:8px}
+.docs-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.doc-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:14px;transition:transform .35s ease,box-shadow .35s ease;min-height:220px}
+.doc-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,23,0.65)}
+.doc-thumb{height:140px;border-radius:10px;background:linear-gradient(135deg,#f97316,#fb7185);display:flex;align-items:center;justify-content:center;font-weight:800;color:#031022;margin-bottom:12px}
 .doc-card h4{margin:6px 0}
-.doc-link{display:inline-block;margin-top:8px;color:var(--accent);font-weight:700}
+.doc-date{font-size:13px;color:var(--muted);margin:6px 0}
+.doc-link{display:inline-flex;margin-top:auto;width:100%;align-items:center;justify-content:center;color:#04233a;background:linear-gradient(90deg,#fff,#f3f4f6);padding:12px 16px;border-radius:10px;font-weight:700;font-size:16px;transition:transform .18s ease, box-shadow .18s ease}
+.doc-link:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(3,16,34,0.35)}
+
+/* Center the docs section title */
+#docs .container h2{ text-align:center; margin-bottom:18px; font-size:36px }
+
+/* Style docs column subtitles */
+.docs-column h3{ font-size:28px; text-align:center; margin-bottom:16px }
+
+/* Stack section styles (cards similar to attachment) */
+.stack-section .lead{max-width:900px;margin:0 auto 18px;text-align:center}
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:22px}
+.stack-item{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:12px;display:flex;align-items:center;gap:18px;box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+.stack-icon{width:74px;height:74px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(90deg,#06b6d4,#3b82f6);color:#04233a;font-weight:800;font-size:20px;box-shadow:0 8px 24px rgba(6,182,212,0.08)}
+.stack-text h3{margin:0;font-size:18px}
+.stack-text p{margin:4px 0 0;color:var(--muted)}
+
+/* Tools small section */
+#tools .lead{max-width:880px;margin:0 auto;text-align:center}
 
 
 .contact-list{list-style:none;padding:0;color:var(--muted)}
 .contact-list a{color:var(--accent)}
+
+/* Neon box styling for contact section */
+.neon-box{
+  border:3px solid;
+  border-image: linear-gradient(90deg, #00d4ff, #ff00ff, #00d4ff) 1;
+  padding:40px;
+  border-radius:12px;
+  background:linear-gradient(135deg, rgba(0,212,255,0.03), rgba(255,0,255,0.03));
+  box-shadow:
+    0 0 20px rgba(0,212,255,0.5),
+    0 0 40px rgba(255,0,255,0.3),
+    inset 0 0 20px rgba(0,212,255,0.1);
+  max-width:600px;
+  margin:40px auto;
+}
 
 .site-footer{text-align:center;padding:28px;color:var(--muted)}
 
@@ -182,6 +227,16 @@ body{
 .panel h2{margin:0 0 12px}
 .lead{color:var(--muted);max-width:780px}
 
+/* About description larger for readability */
+#about .container p,
+#about .container .lead {
+    font-size:24px;
+    line-height:1.9;
+    max-width:920px;
+    margin:0 auto;
+    color:var(--muted);
+}
+
 .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 .skill{background:var(--glass-2);padding:12px;border-radius:12px}
 .skill-name{font-weight:600;margin-bottom:8px}
@@ -245,4 +300,68 @@ body{
 /* small reveal */
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease}
 .reveal.show{opacity:1;transform:none}
+
+/* Space scene: background image, moving stars and shooting comets */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:80px;position:relative;overflow:hidden}
+.space-scene{position:absolute;inset:0;pointer-events:none;z-index:0}
+.space-scene .stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.9) 0, transparent 60%),
+                                                                                         radial-gradient(1px 1px at 30% 40%, rgba(255,255,255,0.85) 0, transparent 60%),
+                                                                                         radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.75) 0, transparent 60%),
+                                                                                         radial-gradient(1px 1px at 80% 70%, rgba(255,255,255,0.6) 0, transparent 60%);
+        background-size: 120% 120%;opacity:0.85;animation: driftStars 60s linear infinite;filter:blur(0.3px)
+}
+
+@keyframes driftStars{from{transform:translateY(0) translateX(0)}to{transform:translateY(-120px) translateX(-80px)}}
+
+/* Comet styling: thin tail + bright head, multiple instances with different timings */
+.comet{position:absolute;left:-20%;top:10%;width:2px;height:120px;border-radius:50px;background:linear-gradient(180deg, rgba(255,255,255,1), rgba(110,231,183,0.05));transform:rotate(25deg);box-shadow:0 0 12px rgba(255,255,255,0.85);opacity:0;filter:blur(0.6px)}
+.comet::after{content:'';position:absolute;right:-6px;top:-6px;width:12px;height:12px;background:radial-gradient(circle, #fff 0%, rgba(110,231,183,0.95) 45%, rgba(110,231,183,0.2) 100%);border-radius:50%;box-shadow:0 0 18px rgba(110,231,183,0.9)}
+
+.comet-1{top:20%;animation:shoot 3.2s linear 1s infinite}
+.comet-2{top:40%;animation:shoot 3.6s linear 3s infinite}
+.comet-3{top:60%;animation:shoot 4s linear 5s infinite}
+
+@keyframes shoot{
+    0%{transform:translateX(-10vw) translateY(0) rotate(25deg);opacity:0}
+    5%{opacity:1}
+    50%{transform:translateX(120vw) translateY(-40vh) rotate(34deg);opacity:1}
+    100%{transform:translateX(220vw) translateY(-80vh) rotate(50deg);opacity:0}
+}
+
+/* Ensure scene sits behind the profile card */
+.hero-right .profile-card{position:relative;z-index:2}
+
+/* Replace profile-photo gradient with user photo (place imagen at imagenes_yo/yo.jpg) */
+.profile-photo{background-image: url("imagenes_yo/yo.jpg") !important;background-size:cover;background-position:center;background-repeat:no-repeat}
+
+/* Slight tint overlay for readability when background image used */
+.hero:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,23,0.45), rgba(2,6,23,0.55));z-index:1;pointer-events:none}
+
+}
+/* Social Icons */
+.social-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:48px;
+  height:48px;
+  border-radius:12px;
+  background:linear-gradient(135deg, rgba(110,231,183,0.1), rgba(110,231,183,0.05));
+  color:var(--accent);
+  border:1px solid rgba(110,231,183,0.2);
+  transition:all .3s ease;
+  text-decoration:none;
+}
+.social-icon:hover{
+  transform:translateY(-6px);
+  box-shadow:0 12px 30px rgba(110,231,183,0.15);
+  background:linear-gradient(135deg, rgba(110,231,183,0.2), rgba(110,231,183,0.1));
+  border-color:rgba(110,231,183,0.4);
+}
+.social-icon:active{
+  transform:translateY(-2px)
+}
+.social-icon svg{
+  width:24px;
+  height:24px;
 }

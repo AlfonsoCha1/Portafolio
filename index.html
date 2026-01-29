@@ -16,15 +16,20 @@
         </div>
         <nav class="nav" aria-label="Main Navigation">
             <a href="#HOME" class="nav-link">Home</a>
+            <a href="#ABOUT Me" class="nav-link">About Me</a>
+            <a href="#Stack" class="nav-link">My Stack</a>
+            <a href="#Diplomas and Certificates" class="nav-link">Diplomas and Certificates</a>
             <a href="#PROJECTS" class="nav-link">Projects</a>
-            <a href="#ABOUT Me" class="nav-link">About</a>
             <a href="#CONTACT" class="nav-link">Contact</a>
         </nav>
         <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
     </header>
 
     <aside class="floating-card" id="floatingCard" aria-hidden="false">
-      <div class="fp-avatar">AC</div>
+      <div class="fp-avatar"> 
+        <img src="imagenes_yo/images.jpg" alt="Alfonso" onerror="this.style.display='none'; this.parentNode.querySelector('.fallback').style.display='flex'" />  <!-- Circulo pequeño -->
+        <span class="fallback">AC</span>
+      </div>
       <div class="fp-info">
         <div class="fp-name">Alfonso Chavarin</div>
         <div class="fp-role">Ingeniero en Sistemas Computacionales</div>
@@ -32,48 +37,253 @@
     </aside>
 
     <main>
-      <section id="home" class="hero">
+      <section id="HOME" class="hero">
         <div class="hero-inner">
           <div class="hero-left">
             <h1 class="hero-title">Hola, soy <span class="accent">Alfonso</span></h1>
             <p class="hero-sub"><span id="typed"></span></p>
             <div class="hero-ctas">
-              <button class="btn btn-primary" data-target="#projects">Ver Proyectos</button>
-              <button class="btn btn-outline" data-target="#contact">Contacto</button>
+              <!-- Social Media Icons -->
+              <a class="social-icon" href="mailto:alfonso.chavarin@hotmail.com" title="Email" aria-label="Enviar email">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M3 8l9 6 9-6M3 8v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+              <a class="social-icon" href="https://www.linkedin.com/in/alfonso-chavarin/" target="_blank" title="LinkedIn" aria-label="LinkedIn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/>
+                </svg>
+              </a>
+              <a class="social-icon" href="https://github.com/AlfonsoCha1?tab=repositories" target="_blank" title="GitHub" aria-label="GitHub">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.603-3.369-1.343-3.369-1.343-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.545 2.914 1.186.092-.923.35-1.545.636-1.9-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+                </svg>
+              </a>
               <!-- CV download badge: place CV_ALFONSO_CHAVARIN.pdf inside the PORTAFOLIO folder -->
-              <a class="cv-download" href="Mi_CV/CV_ALFONSO_CHAVARIN.pdf" download="CV_ALFONSO_CHAVARIN.pdf" title="Descargar CV">
+              <a class="cv-download" href="Mi_CV/CV_ALFONSO_CHAVARIN_english.pdf" download="CV_ALFONSO_CHAVARIN_english.pdf" title="Descargar CV">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 3v10" stroke="#031022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 11l4 4 4-4" stroke="#031022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 21H3" stroke="#031022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 <span>Descargar CV</span>
               </a>
             </div>
           </div>
           <div class="hero-right">
+            <!-- Space scene (stars + comets) placed behind the profile card -->
+            <div class="space-scene" aria-hidden="true">
+              <div class="stars"></div>
+              <div class="comet comet-1"></div>
+              <div class="comet comet-2"></div>
+              <div class="comet comet-3"></div>
+            </div>
             <div class="profile-card" id="profileCard" aria-hidden="false">
-              <div class="profile-photo" aria-hidden="true"></div>
+              <div class="profile-photo" aria-hidden="true">
+                <img src="imagenes_yo/images.jpg" alt="Alfonso Chavarin" onerror="this.style.display='none'" /> <!-- Circulo grande -->
+              </div>
               <div class="profile-deco"></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="docs" class="section">
+       <section id="ABOUT Me" class="section">
         <div class="container">
-          <h2>Diploma y certificados</h2>
+          <h2>About Me</h2>
+           <p>
+              I’m a Computer Systems Engineer who enjoys being the person people can rely on when something isn’t working. I have hands-on experience in IT support and networking troubleshooting internet and connectivity issues, setting up computers and peripherals, and helping keep office environments running smoothly. I like fixing problems in a practical way: first I listen, then I test what’s happening, and I keep going until it’s solved.
+              I’m pretty organized with how I work. I don’t like guessing. I prefer checking the basics, narrowing down the cause, and finding a solution that actually lasts. I also care about making things easier for others, whether that’s explaining a fix in a simple way or leaving things documented so it’s not the same issue again.
+              On the developer side, I’m still growing, but I’m consistent. I keep learning and building personal projects because I genuinely enjoy it. I like working with Python and web technologies to create useful things, automate small tasks, and improve my skills little by little. I’m not trying to sound perfect. I just like learning, building, and getting better over time.
+              In general, I work well both on my own and with a team. I’m easy to work with, I take responsibility, and I like getting things done the right way.
+            </p>
+        </div>
+      </section>
+
+      <!-- Stack section (My Stack) -->
+      <section id="Stack" class="section stack-section">
+        <div class="container">
+          <h2>My Stack</h2>
+          <p class="lead">Modern tools and technologies I use regularly in personal projects and ongoing learning.</p>
+          <div class="stack-grid">
+            <div class="stack-item">
+              <div class="stack-icon">HTML</div>
+              <div class="stack-text"><h3>HTML</h3><p class="muted">Structure</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">CSS</div>
+              <div class="stack-text"><h3>CSS</h3><p class="muted">Styling</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">JS</div>
+              <div class="stack-text"><h3>JavaScript</h3><p class="muted">Interaction</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">C#</div>
+              <div class="stack-text"><h3>C#</h3><p class="muted">Programming Language</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">TS</div>
+              <div class="stack-text"><h3>TypeScript</h3><p class="muted">Type-safe</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">Java</div>
+              <div class="stack-text"><h3>Java</h3><p class="muted">Programming Language</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">C++</div>
+              <div class="stack-text"><h3>C++</h3><p class="muted">Programming Language</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">Java</div>
+              <div class="stack-text"><h3>Java</h3><p class="muted">Programming Language</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">Arduino (Robotic) </div>
+              <div class="stack-text"><h3>Arduino (Robotic)</h3><p class="muted">Hardware</p></div>
+            </div>
+            <div class="stack-item">
+              <div class="stack-icon">Git & Github</div>
+              <div class="stack-text"><h3>Git & Github</h3><p class="muted">Version Control</p></div>
+            </div>
+             <div class="stack-item">
+              <div class="stack-icon">Java</div>
+              <div class="stack-text"><h3>Java</h3><p class="muted">Programming Language</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Small tools section below stack -->
+      <section id="tools" class="section">
+        <div class="container">
+          <h2>Tools & Technologies</h2>
+          <p class="lead">I use Git, Node.js, Vite, Docker and other tools to develop, test and deploy applications.</p>
+        </div>
+      </section>
+
+      <section id="Diplomas and Certificates" class="section">
+        <div class="container">
+          <h2>Diplomas and Certificates</h2>
           <div class="docs-wrap">
             <div class="docs-column">
               <h3>Certificados</h3>
               <div class="docs-grid">
-                <article class="doc-card" data-doc="cert1">
+                <article class="doc-card">
                   <div class="doc-thumb">C1</div>
-                  <h4>Certificado de Curso A</h4>
-                  <p class="muted">Institución - Año</p>
-                  <a class="doc-link" href="#" data-doc="cert1">Ver</a>
+                  <h4>Scrum Master Certification</h4>
+                  <p class="doc-date">2024 - 2024 | Organización</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Scrum_Master_Certification_Scrum_Methodologies.pdf" target="_blank">Look</a>
                 </article>
-                <article class="doc-card" data-doc="cert2">
+                <article class="doc-card">
                   <div class="doc-thumb">C2</div>
-                  <h4>Certificado de Curso B</h4>
-                  <p class="muted">Institución - Año</p>
-                  <a class="doc-link" href="#" data-doc="cert2">Ver</a>
+                  <h4>Redes Empresariales Avanzadas</h4>
+                  <p class="doc-date">2023 - 2023 | Cisco Academy</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Redes empresariales Avanzadas.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C3</div>
+                  <h4>Introduction to Scrum Master</h4>
+                  <p class="doc-date">2023 - 2023 | Scrum Institute</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Introduction to Scrum Master Training.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C4</div>
+                  <h4>Informática</h4>
+                  <p class="doc-date">2020 - 2020 | Instituto</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Informatica.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C5</div>
+                  <h4>Protección de Datos Personales</h4>
+                  <p class="doc-date">2024 - 2024 | Regulatorio</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Curso Regulatorio Protección de Datos Personales.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C6</div>
+                  <h4>Git y Github - Coursera</h4>
+                  <p class="doc-date">2023 - 2023 | Coursera</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Coursera_Introduccion a Git y Github.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C7</div>
+                  <h4>OpenSUSE Linux OS Fundamentals</h4>
+                  <p class="doc-date">2023 - 2023 | Coursera</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Coursera certificado OpenSUSE Linux OS Fundamentals.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C8</div>
+                  <h4>Comunicación Digital</h4>
+                  <p class="doc-date">2022 - 2022 | Institución</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Comunicación digital con medios  enrique.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C9</div>
+                  <h4>Comunicación Web Interactiva</h4>
+                  <p class="doc-date">2022 - 2022 | Instituto</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Comunicacion web Interactiva.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C10</div>
+                  <h4>Cisco Redes Empresariales</h4>
+                  <p class="doc-date">2023 - 2023 | Cisco Academy</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Cisco redes empresariales avanzadas.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C11</div>
+                  <h4>Inteligencia Artificial</h4>
+                  <p class="doc-date">2024 - 2024 | Google</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/certificate Inteligencia Artificial.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C12</div>
+                  <h4>Geminis - Google</h4>
+                  <p class="doc-date">2024 - 2024 | Google</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/certificate geminis.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C13</div>
+                  <h4>Código de Conducta Grupo B</h4>
+                  <p class="doc-date">2024 - 2024 | Empresa</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/certificate Código de Conducta del Grupo B.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C14</div>
+                  <h4>Protección Civil 2025</h4>
+                  <p class="doc-date">2025 - 2025 | Gobierno</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Certificado Principios Básicos de Protección Civil 2025.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C15</div>
+                  <h4>Redes y Cisco</h4>
+                  <p class="doc-date">2023 - 2023 | Cisco Academy</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Certificado de redes y cisco.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C16</div>
+                  <h4>Python - Certificado</h4>
+                  <p class="doc-date">2023 - 2023 | Academia</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/CERTIFICADO  DE PYHTON.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C17</div>
+                  <h4>Robótica Avanzada</h4>
+                  <p class="doc-date">2022 - 2022 | Instituto Técnico</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/CERTIFICADO  AVANZADO DE ROBOTICA.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C18</div>
+                  <h4>Redes Empresariales Seguridad</h4>
+                  <p class="doc-date">2023 - 2023 | Cisco</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Redes empresariales, Seguridad y Automat.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C19</div>
+                  <h4>Redes Empresariales Automatización</h4>
+                  <p class="doc-date">2023 - 2023 | Cisco</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Redes empresarial y seguridad automatiza.pdf" target="_blank">Look</a>
+                </article>
+                <article class="doc-card">
+                  <div class="doc-thumb">C20</div>
+                  <h4>Reconocimiento</h4>
+                  <p class="doc-date">2024 - 2024 | Institución</p>
+                  <a class="doc-link" href="CERTIFICADOS/CERTIFICADOS/Reconocimiento.pdf" target="_blank">Look</a>
                 </article>
               </div>
             </div>
@@ -81,17 +291,17 @@
             <div class="docs-column">
               <h3>Diplomas</h3>
               <div class="docs-grid">
-                <article class="doc-card" data-doc="dip1">
+                <article class="doc-card">
                   <div class="doc-thumb">D1</div>
-                  <h4>Diploma en Ingeniería</h4>
-                  <p class="muted">Institución - Año</p>
-                  <a class="doc-link" href="#" data-doc="dip1">Ver</a>
+                  <h4>Ingeniería en Sistemas Computacionales</h4>
+                  <p class="doc-date">2019 - 2024 | Universidad UAEM</p>
+                  <a class="doc-link" href="Mis_Diplomas/Diploma de la ingeniería en sistemas computacionales.pdf" target="_blank">Look</a>
                 </article>
-                <article class="doc-card" data-doc="dip2">
+                <article class="doc-card">
                   <div class="doc-thumb">D2</div>
-                  <h4>Diploma Especialización X</h4>
-                  <p class="muted">Institución - Año</p>
-                  <a class="doc-link" href="#" data-doc="dip2">Ver</a>
+                  <h4>Diplomado en Inteligencia Artificial</h4>
+                  <p class="doc-date">2024 - 2024 | Top Learning</p>
+                  <a class="doc-link" href="Mis_Diplomas/jose-alfonso.chavarin-montoya-Diplomado-En-Inteligencia-Artificial-Inteligencia-Artificial-Diplomado-Top-Learning.pdf" target="_blank">Look</a>
                 </article>
               </div>
             </div>
@@ -99,52 +309,43 @@
         </div>
       </section>
 
-      <section id="projects" class="section">
+      <section id="PROJECTS" class="section">
         <div class="container">
-          <h2>Proyectos</h2>
+          <h2>Proyects</h2>
           <div class="projects-grid">
             <article class="project-card" data-id="1">
               <div class="project-thumb">P1</div>
               <h3>Interfaz dinámica</h3>
               <p>Microinteracciones y animaciones con JS y CSS.</p>
-              <a class="proj-link" href="#" data-project="1">Ver</a>
+              <a class="proj-link" href="#" data-project="1">Look</a>
             </article>
             <article class="project-card" data-id="2">
               <div class="project-thumb">P2</div>
               <h3>Landing optimizada</h3>
               <p>Landing con performance y CTA claros.</p>
-              <a class="proj-link" href="#" data-project="2">Ver</a>
+              <a class="proj-link" href="#" data-project="2">Look</a>
             </article>
             <article class="project-card" data-id="3">
               <div class="project-thumb">P3</div>
               <h3>App de ejemplo</h3>
               <p>SPA con estado compartido y animaciones suaves.</p>
-              <a class="proj-link" href="#" data-project="3">Ver</a>
+              <a class="proj-link" href="#" data-project="3">Look</a>
             </article>
           </div>
         </div>
       </section>
 
-      <section id="about" class="section">
+      <section id="CONTACT" class="section contact">
         <div class="container">
-          <h2>Sobre mí</h2>
-          <p>Soy ingeniero en sistemas computacionales, especializado en desarrollo web con enfoque en experiencia de usuario, optimización y animaciones.</p>
-        </div>
-      </section>
-
-      <section id="contact" class="section contact">
-        <div class="container">
-          <h2>Contacto</h2>
-          <ul class="contact-list">
-            <li><strong>Teléfono:</strong> +52 55 1234 5678</li>
-            <li><strong>Email:</strong> <a href="mailto:tu@email.com">tu@email.com</a></li>
-            <li><strong>LinkedIn:</strong> <a href="#">linkedin.com/in/tu-usuario</a></li>
-              <li><strong>GitHub:</strong> <a href="#">github.com/tu-usuario</a></li>
-              <li><strong>Descargar CV:</strong> <a class="cv-inline" href="Mi_CV/CV_ALFONSO_CHAVARIN.pdf" download="CV_ALFONSO_CHAVARIN.pdf">Descargar PDF</a>
-                <!-- Local fallback link (only works when opening file locally): -->
-                <small class="muted">(Prueba local: <a href="file:///C:/Users/alfon/ALFONSO CHAVARIN/CURRICULUM/Nuevo%20corriculum/CV_ALFONSO_CHAVARIN.pdf">abrir desde carpeta</a>)</small>
-              </li>
-          </ul>
+          <h2>Contact</h2>
+          <div class="neon-box">
+            <ul class="contact-list">
+              <li><strong>Teléfono:</strong> +52 (777) 5206401</li>
+              <li><strong>Email:</strong> <a href="mailto:alfonso.chavarin@gmail.com">alfonso.chavarin@gmail.com</a></li>
+              <li><strong>LinkedIn:</strong> <a href="#">https://www.linkedin.com/in/alfonso-chavarin/</a></li>
+              <li><strong>GitHub:</strong> <a href="#">https://github.com/AlfonsoCha1?tab=repositories</a></li>
+            </ul>
+          </div>
         </div>
       </section>
     </main>
