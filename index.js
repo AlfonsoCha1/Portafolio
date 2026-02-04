@@ -275,7 +275,6 @@
     { id: 'HOME', red: false, redAnim: false },
     { id: 'ABOUT Me', red: false, redAnim: false },
     { id: 'Stack', red: true, redAnim: true },
-    { id: 'tools', red: true, redAnim: true },
     { id: 'Diplomas and Certificates', red: true, redAnim: true },
     { id: 'PROJECTS', red: true, redAnim: false },
     { id: 'CONTACT', red: true, redAnim: false }
@@ -283,6 +282,7 @@
 
   let lastBgId = null;
   let lastRedAnim = null;
+  let bgTimeout = null;
 
   const bgIO = new IntersectionObserver((entries)=>{
     const visible = entries
@@ -297,12 +297,13 @@
     lastBgId = config.id;
     lastRedAnim = config.redAnim;
 
-    requestAnimationFrame(()=>{
+    clearTimeout(bgTimeout);
+    bgTimeout = setTimeout(()=>{
       if(config.red) document.body.classList.add('is-red');
       else document.body.classList.remove('is-red');
       if(config.redAnim) document.body.classList.add('is-red-anim');
       else document.body.classList.remove('is-red-anim');
-    });
+    }, 150);
   }, { threshold: [0.35, 0.55, 0.75], rootMargin: '0px 0px -20% 0px' });
 
   bgSections.forEach(s => {
