@@ -272,23 +272,68 @@
 
   // Background switch (purple home/about, red from stack to contact)
   const bgSections = [
-    { id: 'HOME', red: false, redAnim: false },
-    { id: 'ABOUT Me', red: false, redAnim: false },
-    { id: 'Stack', red: true, redAnim: true },
-    { id: 'Diplomas and Certificates', red: true, redAnim: true },
-    { id: 'PROJECTS', red: true, redAnim: false },
-    { id: 'CONTACT', red: true, redAnim: false }
+    { id: 'HOME', red: false, redAnim: false, video: 'Pikachu.mp4', showVideo: true },
+    { id: 'ABOUT Me', red: false, redAnim: false, video: 'Charizard.mp4', showVideo: true },
+    { id: 'Stack', red: true, redAnim: true, video: null, showVideo: false },
+    { id: 'Diplomas and Certificates', red: true, redAnim: true, video: 'Blastoise.mp4', showVideo: true },
+    { id: 'PROJECTS', red: true, redAnim: false, video: 'Venasaur.mp4', showVideo: true },
+    { id: 'CONTACT', red: true, redAnim: false, video: null, showVideo: false }
   ];
 
   let lastBgId = null;
   let lastRedAnim = null;
   let bgTimeout = null;
+  const videoEl = document.getElementById('pokemonVideo');
+  const videoContainer = document.getElementById('pokemonVideoContainer');
+  const videoOverlay = document.getElementById('videoOverlay');
+  let videoPlaying = false;
+
+  function playVideo(videoName) {
+    if(videoPlaying || !videoName) return;
+    videoPlaying = true;
+    
+    videoContainer.classList.add('show-video');
+    videoOverlay.classList.remove('fade-out');
+    const newSrc = `Video_de_Pokemon/${videoName}`;
+    videoEl.querySelector('source').src = newSrc;
+    videoEl.load();
+    videoEl.currentTime = 0;
+    videoEl.style.display = 'block';
+    
+    videoEl.play().catch(e => console.log('Video play error:', e));
+    
+    const handleVideoEnd = ()=>{
+      videoOverlay.classList.add('fade-out');
+      setTimeout(()=>{
+        videoContainer.classList.remove('show-video');
+        videoEl.style.display = 'none';
+        videoPlaying = false;
+      }, 500);
+    };
+    
+    videoEl.removeEventListener('ended', handleVideoEnd);
+    videoEl.addEventListener('ended', handleVideoEnd, { once: true });
+  }
+
+  // Agregar listeners a botones de secciones con video
+  document.querySelectorAll('a[href="#HOME"], a[href="#ABOUT Me"], a[href="#Diplomas and Certificates"], a[href="#PROJECTS"]').forEach(btn => {
+    btn.addEventListener('click', (e)=>{
+      const href = btn.getAttribute('href').substring(1);
+      const config = bgSections.find(s => s.id === href);
+      if(config && config.showVideo) {
+        e.preventDefault();
+        const el = document.getElementById(href);
+        el.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(()=> playVideo(config.video), 100);
+      }
+    });
+  });
 
   const bgIO = new IntersectionObserver((entries)=>{
     const visible = entries
       .filter(e => e.isIntersecting)
       .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if(!visible || visible.intersectionRatio < 0.35) return;
+    if(!visible || visible.intersectionRatio < 0.25) return;
 
     const config = bgSections.find(s => s.id === visible.target.id);
     if(!config) return;
@@ -303,8 +348,13 @@
       else document.body.classList.remove('is-red');
       if(config.redAnim) document.body.classList.add('is-red-anim');
       else document.body.classList.remove('is-red-anim');
-    }, 150);
-  }, { threshold: [0.35, 0.55, 0.75], rootMargin: '0px 0px -20% 0px' });
+      
+      // Reproducir video si la sección lo tiene
+      if(config.showVideo && config.video && !videoPlaying) {
+        playVideo(config.video);
+      }
+    }, 100);
+  }, { threshold: [0.25, 0.5, 0.75], rootMargin: '0px 0px -40% 0px' });
 
   bgSections.forEach(s => {
     const el = document.getElementById(s.id);
