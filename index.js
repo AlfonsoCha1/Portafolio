@@ -55,10 +55,33 @@
   const modalClose = modal && modal.querySelector('.modal-close');
 
   const projects = {
-    1:{title:'Interfaz dinámica',desc:'Proyecto con animaciones CSS y JS para mejorar la experiencia.',link:'#'},
-    2:{title:'Landing optimizada',desc:'Landing con enfoque en rendimiento y conversiones.',link:'#'},
-    3:{title:'App de ejemplo',desc:'SPA con estado y animaciones por estado.',link:'#'}
+    1:{ title:'Interfaz Dinámica', desc:'Proyecto con animaciones CSS y JS para mejorar la experiencia del usuario. Incluye microinteracciones fluidas y transiciones suaves.', color:'142, 249, 252', link:'#' },
+    2:{ title:'Landing Optimizada', desc:'Landing page con enfoque en performance y tasas de conversión. Optimizada para móvil con CTA claros.', color:'110, 231, 183', link:'#' },
+    3:{ title:'App de Ejemplo', desc:'Single Page Application (SPA) con gestión de estado compartido y animaciones suaves.', color:'252, 208, 142', link:'#' },
+    4:{ title:'E-commerce Store', desc:'Plataforma de tienda online con carrito de compras, sistema de pago integrado y gestión de inventario.', color:'252, 142, 142', link:'#' },
+    5:{ title:'Dashboard Analytics', desc:'Panel de análisis en tiempo real con gráficos interactivos, mapas de calor y reportes personalizados.', color:'252, 142, 239', link:'#' },
+    6:{ title:'Chat Application', desc:'Aplicación de mensajería instantánea con soporte para grupos, notificaciones y sincronización en vivo.', color:'204, 142, 252', link:'#' },
+    7:{ title:'Portfolio Personal', desc:'Sitio web personal con galería de proyectos, blog integrado y formulario de contacto optimizado.', color:'142, 202, 252', link:'#' },
+    8:{ title:'Task Manager', desc:'Gestor de tareas colaborativo con asignación de roles, cronograma Gantt y seguimiento de progreso.', color:'173, 255, 47', link:'#' },
+    9:{ title:'Video Streaming', desc:'Plataforma de streaming de video con reproductor personalizado, recomendaciones IA y comentarios en vivo.', color:'255, 165, 0', link:'#' },
+    10:{ title:'Social Network', desc:'Red social completa con perfiles, muro de actividades, notificaciones y sistema de mensajes privados.', color:'64, 224, 208', link:'#' }
   };
+
+  // Carousel project cards click handler
+  document.querySelectorAll('.carousel-project').forEach(card=>{
+    card.addEventListener('click', function(){
+      const projectId = this.getAttribute('data-project');
+      const p = projects[projectId];
+      if(!p) return;
+      modalTitle.textContent = p.title;
+      modalDesc.textContent = p.desc;
+      modalThumb.style.background = `linear-gradient(135deg, rgba(${p.color}, 0.3) 0%, rgba(${p.color}, 0.7) 80%, rgba(${p.color}, 0.9) 100%)`;
+      modalThumb.textContent = p.title;
+      modalHref.href = p.link;
+      modal.setAttribute('aria-hidden','false');
+      modalClose && modalClose.focus();
+    });
+  });
 
   // Documents (certificados / diplomas)
   const docs = {
@@ -84,7 +107,7 @@
   });
   modalClose && modalClose.addEventListener('click', ()=> modal.setAttribute('aria-hidden','true'));
   modal && modal.addEventListener('click', e=>{ if(e.target===modal) modal.setAttribute('aria-hidden','true'); });
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') modal && modal.setAttribute('aria-hidden','true'); });
+
 
   // Tilt for project cards
   document.querySelectorAll('.project-card').forEach(card=>{
@@ -99,21 +122,68 @@
     card.addEventListener('mouseleave', ()=> card.style.transform = 'none');
   });
 
-  // Document links open same modal (set modal link to actual PDF)
+  // Document links open in the document modal (embedded preview)
   document.querySelectorAll('.doc-link').forEach(a=>{
+    // replace link text with 'Ver' for clarity
+    a.textContent = 'Ver';
     a.addEventListener('click', function(e){
       e.preventDefault();
-      const id = this.getAttribute('data-doc');
-      const d = docs[id];
-      if(!d) return;
-      modalTitle.textContent = d.title;
-      modalDesc.textContent = d.desc;
-      modalThumb.textContent = d.title;
-      modalHref.href = d.link || '#';
-      // ensure downloads open in new tab when clicked
-      modalHref.setAttribute('target','_blank');
-      modal.setAttribute('aria-hidden','false');
-      modalClose && modalClose.focus();
+      const url = this.getAttribute('href');
+      const title = this.closest('.doc-card')?.querySelector('h4')?.textContent || 'Documento';
+      const docModal = document.getElementById('docModal');
+      const docIframe = document.getElementById('docIframe');
+      const docTitle = document.getElementById('docModalTitle');
+      const docClose = docModal && docModal.querySelector('.modal-close');
+      if(!docModal || !docIframe){
+        window.open(url, '_blank');
+        return;
+      }
+      docTitle.textContent = title;
+      docIframe.src = url;
+      docModal.setAttribute('aria-hidden','false');
+      docClose && docClose.focus();
+    });
+  });
+
+  // Close behavior for doc modal: close button, click outside, ESC
+  const docModal = document.getElementById('docModal');
+  const docCloseBtn = docModal && docModal.querySelector('.modal-close');
+  docCloseBtn && docCloseBtn.addEventListener('click', ()=>{
+    docModal.setAttribute('aria-hidden','true');
+    const iframe = document.getElementById('docIframe'); if(iframe) iframe.src = '';
+  });
+  docModal && docModal.addEventListener('click', e=>{ if(e.target === docModal){ docModal.setAttribute('aria-hidden','true'); const iframe = document.getElementById('docIframe'); if(iframe) iframe.src = ''; } });
+
+  // Escape should close both modals
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape'){ modal && modal.setAttribute('aria-hidden','true'); docModal && docModal.setAttribute('aria-hidden','true'); const iframe = document.getElementById('docIframe'); if(iframe) iframe.src = ''; } });
+
+  // Controles globales para maximizar/minimizar ambos listados (certificados y diplomas)
+  const expandAllBtn = document.getElementById('docs-expand-all');
+  const collapseAllBtn = document.getElementById('docs-collapse-all');
+  const allGrids = document.querySelectorAll('.docs-column .docs-grid');
+
+  // Expandir todas: quitar la clase 'collapsed' de cada grid
+  expandAllBtn && expandAllBtn.addEventListener('click', ()=>{
+    allGrids.forEach(g=> g.classList.remove('collapsed'));
+  });
+
+  // Colapsar todas: añadir la clase 'collapsed' para mostrar solo 3 tarjetas
+  collapseAllBtn && collapseAllBtn.addEventListener('click', ()=>{
+    allGrids.forEach(g=> g.classList.add('collapsed'));
+    // opcional: desplazar suavemente hacia la sección de documentos
+    const docsSection = document.querySelector('#Diplomas\\ and\\ Certificates');
+    if(docsSection) docsSection.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+
+  // Compatibilidad: si existen botones individuales con la clase '.docs-toggle', los manejamos también
+  document.querySelectorAll('.docs-toggle').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const target = btn.dataset.target;
+      let grid = target ? document.querySelector(`.docs-column[data-which="${target}"] .docs-grid`) : (btn.closest('.docs-column') && btn.closest('.docs-column').querySelector('.docs-grid'));
+      if(!grid) return;
+      const isCollapsed = grid.classList.toggle('collapsed');
+      btn.textContent = isCollapsed ? 'Maximizar' : 'Minimizar';
+      btn.setAttribute('aria-pressed', (!isCollapsed).toString());
     });
   });
 
@@ -139,10 +209,57 @@
     }, {passive:true});
   }
 
-  // Mobile nav toggle
-  const navToggle = document.querySelector('.nav-toggle');
+  // Sidebar Menu toggle
+  const menuToggle = document.getElementById('menuToggle');
+  const navToggle = document.getElementById('navToggle');
+  const sidebarMenu = document.getElementById('sidebarMenu');
+  const sidebarOverlay = document.getElementById('sidebarOverlay');
+  const sidebarClose = document.getElementById('sidebarClose');
+  const sidebarLinks = document.querySelectorAll('.sidebar-link');
+
+  // Function to toggle sidebar
+  function toggleSidebar() {
+    const isHidden = sidebarMenu.getAttribute('aria-hidden') === 'true';
+    sidebarMenu.setAttribute('aria-hidden', !isHidden);
+    sidebarOverlay.classList.toggle('active');
+  }
+
+  // Toggle on menu button or nav toggle click
+  menuToggle && menuToggle.addEventListener('click', toggleSidebar);
+  navToggle && navToggle.addEventListener('click', toggleSidebar);
+
+  // Close sidebar when close button clicked
+  sidebarClose && sidebarClose.addEventListener('click', ()=>{
+    sidebarMenu.setAttribute('aria-hidden', 'true');
+    sidebarOverlay.classList.remove('active');
+  });
+
+  // Close sidebar when a link is clicked
+  sidebarLinks.forEach(link=>{
+    link.addEventListener('click', ()=>{
+      sidebarMenu.setAttribute('aria-hidden', 'true');
+      sidebarOverlay.classList.remove('active');
+    });
+  });
+
+  // Close sidebar when overlay is clicked
+  sidebarOverlay && sidebarOverlay.addEventListener('click', ()=>{
+    sidebarMenu.setAttribute('aria-hidden', 'true');
+    sidebarOverlay.classList.remove('active');
+  });
+
+  // Close sidebar on ESC key
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && sidebarMenu.getAttribute('aria-hidden') === 'false'){
+      sidebarMenu.setAttribute('aria-hidden', 'true');
+      sidebarOverlay.classList.remove('active');
+    }
+  });
+
+  // Mobile nav toggle - for old nav display
+  const oldNavToggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.nav');
-  navToggle && navToggle.addEventListener('click', ()=>{
+  oldNavToggle && oldNavToggle.addEventListener('click', ()=>{
     if(nav.style.display === 'flex') nav.style.display = 'none'; else nav.style.display = 'flex';
   });
 
@@ -151,6 +268,46 @@
     el.addEventListener('click', ()=>{
       el.animate([{transform:'scale(1)'},{transform:'scale(0.98)'},{transform:'scale(1)'}],{duration:220});
     });
+  });
+
+  // Background switch (purple home/about, red from stack to contact)
+  const bgSections = [
+    { id: 'HOME', red: false, redAnim: false },
+    { id: 'ABOUT Me', red: false, redAnim: false },
+    { id: 'Stack', red: true, redAnim: true },
+    { id: 'tools', red: true, redAnim: true },
+    { id: 'Diplomas and Certificates', red: true, redAnim: true },
+    { id: 'PROJECTS', red: true, redAnim: false },
+    { id: 'CONTACT', red: true, redAnim: false }
+  ];
+
+  let lastBgId = null;
+  let lastRedAnim = null;
+
+  const bgIO = new IntersectionObserver((entries)=>{
+    const visible = entries
+      .filter(e => e.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if(!visible || visible.intersectionRatio < 0.35) return;
+
+    const config = bgSections.find(s => s.id === visible.target.id);
+    if(!config) return;
+    if(lastBgId === config.id && lastRedAnim === config.redAnim) return;
+
+    lastBgId = config.id;
+    lastRedAnim = config.redAnim;
+
+    requestAnimationFrame(()=>{
+      if(config.red) document.body.classList.add('is-red');
+      else document.body.classList.remove('is-red');
+      if(config.redAnim) document.body.classList.add('is-red-anim');
+      else document.body.classList.remove('is-red-anim');
+    });
+  }, { threshold: [0.35, 0.55, 0.75], rootMargin: '0px 0px -20% 0px' });
+
+  bgSections.forEach(s => {
+    const el = document.getElementById(s.id);
+    if(el) bgIO.observe(el);
   });
 
 })();
