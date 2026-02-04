@@ -83,13 +83,7 @@
     });
   });
 
-  // Documents (certificados / diplomas)
-  const docs = {
-    cert1:{title:'Certificado de Curso A', desc:'Certificado obtenido en Curso A. Institución - Año.', link:'Mi_CV/certificado-curso-a.pdf'},
-    cert2:{title:'Certificado de Curso B', desc:'Certificado obtenido en Curso B. Institución - Año.', link:'Mi_CV/certificado-curso-b.pdf'},
-    dip1:{title:'Diploma en Ingeniería', desc:'Diploma oficial en Ingeniería en Sistemas Computacionales. Institución - Año.', link:'Mi_CV/diploma-ingenieria.pdf'},
-    dip2:{title:'Diploma Especialización X', desc:'Diploma de especialización X. Institución - Año.', link:'Mi_CV/diploma-especializacion-x.pdf'}
-  };
+  // (Los botones Look Me abren el PDF en nueva pestaña por defecto)
 
   document.querySelectorAll('.proj-link').forEach(a=>{
     a.addEventListener('click', function(e){
@@ -122,40 +116,12 @@
     card.addEventListener('mouseleave', ()=> card.style.transform = 'none');
   });
 
-  // Document links open in the document modal (embedded preview)
-  document.querySelectorAll('.doc-link').forEach(a=>{
-    // replace link text with 'Ver' for clarity
-    a.textContent = 'Ver';
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      const url = this.getAttribute('href');
-      const title = this.closest('.doc-card')?.querySelector('h4')?.textContent || 'Documento';
-      const docModal = document.getElementById('docModal');
-      const docIframe = document.getElementById('docIframe');
-      const docTitle = document.getElementById('docModalTitle');
-      const docClose = docModal && docModal.querySelector('.modal-close');
-      if(!docModal || !docIframe){
-        window.open(url, '_blank');
-        return;
-      }
-      docTitle.textContent = title;
-      docIframe.src = url;
-      docModal.setAttribute('aria-hidden','false');
-      docClose && docClose.focus();
-    });
+  // Escape should close project modal
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape'){
+      modal && modal.setAttribute('aria-hidden','true');
+    }
   });
-
-  // Close behavior for doc modal: close button, click outside, ESC
-  const docModal = document.getElementById('docModal');
-  const docCloseBtn = docModal && docModal.querySelector('.modal-close');
-  docCloseBtn && docCloseBtn.addEventListener('click', ()=>{
-    docModal.setAttribute('aria-hidden','true');
-    const iframe = document.getElementById('docIframe'); if(iframe) iframe.src = '';
-  });
-  docModal && docModal.addEventListener('click', e=>{ if(e.target === docModal){ docModal.setAttribute('aria-hidden','true'); const iframe = document.getElementById('docIframe'); if(iframe) iframe.src = ''; } });
-
-  // Escape should close both modals
-  document.addEventListener('keydown', e=>{ if(e.key === 'Escape'){ modal && modal.setAttribute('aria-hidden','true'); docModal && docModal.setAttribute('aria-hidden','true'); const iframe = document.getElementById('docIframe'); if(iframe) iframe.src = ''; } });
 
   // Controles globales para maximizar/minimizar ambos listados (certificados y diplomas)
   const expandAllBtn = document.getElementById('docs-expand-all');
@@ -187,17 +153,32 @@
     });
   });
 
-  // Scrollspy: highlight nav links
+  // Scrollspy: highlight nav links (both header and sidebar)
   const sections = document.querySelectorAll('main section');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const obs = new IntersectionObserver((entries)=>{
+  const navLinks = document.querySelectorAll('.nav-link, .sidebar-link');
+  
+  const scrollObs = new IntersectionObserver((entries)=>{
+    let mostVisible = null;
+    let maxRatio = 0;
+    
     entries.forEach(e=>{
-      if(e.isIntersecting){
-        navLinks.forEach(a=> a.classList.toggle('active', a.getAttribute('href') === '#'+e.target.id));
+      if(e.isIntersecting && e.intersectionRatio > maxRatio){
+        maxRatio = e.intersectionRatio;
+        mostVisible = e.target;
       }
     });
-  },{threshold:0.5});
-  sections.forEach(s=> obs.observe(s));
+    
+    if(mostVisible){
+      const targetId = mostVisible.id;
+      navLinks.forEach(a=> {
+        const linkHref = a.getAttribute('href');
+        const isActive = linkHref === '#' + targetId;
+        a.classList.toggle('active', isActive);
+      });
+    }
+  }, {threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]});
+  
+  sections.forEach(s=> scrollObs.observe(s));
 
   // Floating card follows scroll (adjust top position) on larger screens
   const floating = document.getElementById('floatingCard');
@@ -207,6 +188,19 @@
       const y = Math.min(Math.max(window.pageYOffset + 100, 100), document.body.scrollHeight - 300);
       floating.style.top = (y) + 'px';
     }, {passive:true});
+  }
+
+  // Mostrar tarjeta flotante solo en HOME
+  const homeSection = document.getElementById('HOME');
+  if(floating && homeSection){
+    const homeObs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.target === homeSection){
+          floating.classList.toggle('is-hidden', !e.isIntersecting);
+        }
+      });
+    }, {threshold: 0.4});
+    homeObs.observe(homeSection);
   }
 
   // Sidebar Menu toggle
@@ -283,6 +277,7 @@
   let lastBgId = null;
   let lastRedAnim = null;
   let bgTimeout = null;
+  const playedOnScroll = new Set();
   const videoEl = document.getElementById('pokemonVideo');
   const videoContainer = document.getElementById('pokemonVideoContainer');
   const videoOverlay = document.getElementById('videoOverlay');
@@ -291,17 +286,23 @@
   function playVideo(videoName) {
     if(videoPlaying || !videoName) return;
     videoPlaying = true;
-    
-    videoContainer.classList.add('show-video');
-    videoOverlay.classList.remove('fade-out');
+
     const newSrc = `Video_de_Pokemon/${videoName}`;
     videoEl.querySelector('source').src = newSrc;
     videoEl.load();
     videoEl.currentTime = 0;
-    videoEl.style.display = 'block';
-    
-    videoEl.play().catch(e => console.log('Video play error:', e));
-    
+
+    videoOverlay.classList.remove('fade-out');
+
+    videoEl.play().then(()=>{
+      videoContainer.classList.add('show-video');
+      videoEl.style.display = 'block';
+    }).catch(()=>{
+      videoContainer.classList.remove('show-video');
+      videoEl.style.display = 'none';
+      videoPlaying = false;
+    });
+
     const handleVideoEnd = ()=>{
       videoOverlay.classList.add('fade-out');
       setTimeout(()=>{
@@ -310,9 +311,16 @@
         videoPlaying = false;
       }, 500);
     };
-    
+
     videoEl.removeEventListener('ended', handleVideoEnd);
     videoEl.addEventListener('ended', handleVideoEnd, { once: true });
+  }
+
+  function shouldPlayOnScroll(config){
+    if(!config.showVideo || !config.video) return false;
+    if(playedOnScroll.has(config.id)) return false;
+    playedOnScroll.add(config.id);
+    return true;
   }
 
   // Agregar listeners a botones de secciones con video
@@ -320,7 +328,7 @@
     btn.addEventListener('click', (e)=>{
       const href = btn.getAttribute('href').substring(1);
       const config = bgSections.find(s => s.id === href);
-      if(config && config.showVideo) {
+      if(config && config.showVideo && config.video) {
         e.preventDefault();
         const el = document.getElementById(href);
         el.scrollIntoView({ behavior: 'smooth' });
@@ -349,10 +357,7 @@
       if(config.redAnim) document.body.classList.add('is-red-anim');
       else document.body.classList.remove('is-red-anim');
       
-      // Reproducir video si la sección lo tiene
-      if(config.showVideo && config.video && !videoPlaying) {
-        playVideo(config.video);
-      }
+      // Videos solo se reproducen al hacer clic en botones del menú, no en scroll
     }, 100);
   }, { threshold: [0.25, 0.5, 0.75], rootMargin: '0px 0px -40% 0px' });
 
@@ -362,3 +367,4 @@
   });
 
 })();
+
